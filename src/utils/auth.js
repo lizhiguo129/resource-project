@@ -1,6 +1,6 @@
-import Cookies from 'js-cookie'
+import Cookies from 'js-cookie'// day3：js-cookie 缓存的插件 
 
-const TokenKey = 'vue_admin_template_token'
+const TokenKey = 'hrsaas-ihrm-token' // day3设定一个独一无二的key
 
 export function getToken() {
   return Cookies.get(TokenKey)

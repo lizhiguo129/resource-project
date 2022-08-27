@@ -1,11 +1,14 @@
 <template>
   <div :class="classObj" class="app-wrapper">
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
+    <!--  sidebar 左侧组件-->
     <sidebar class="sidebar-container" />
     <div class="main-container">
       <div :class="{'fixed-header':fixedHeader}">
+        <!-- navbar 头部组件 -->
         <navbar />
       </div>
+      <!-- app-main 就是页面切换的容器 里面有 二级路由 -->
       <app-main />
     </div>
   </div>

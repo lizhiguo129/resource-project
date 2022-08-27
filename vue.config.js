@@ -27,7 +27,7 @@ module.exports = {
   publicPath: '/',
   outputDir: 'dist',
   assetsDir: 'static',
-  lintOnSave: process.env.NODE_ENV === 'development',
+  lintOnSave: process.env.NODE_ENV === 'development', // 开发环境下开启
   productionSourceMap: false,
   devServer: {
     port: port,
@@ -35,6 +35,15 @@ module.exports = {
     overlay: {
       warnings: false,
       errors: true
+    },
+    // before: require('./mock/mock-server.js')
+    // 配置反向代理
+    proxy: {
+      '/api': {
+        target: 'http://ihrm-java.itheima.net/', // 跨域请求的地址
+        changeOrigin: true // 只有这个值为true的情况下 才表示开启跨域
+        // 是不是需要重新更改
+      }
     }
   },
   configureWebpack: {

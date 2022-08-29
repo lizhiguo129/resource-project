@@ -11,7 +11,7 @@
       <div class="title-container">
         <h3 class="title">
           <!-- 修改登录页面的输入框上面的标题 -->
-          <img src="@/assets/common/login-logo.png" alt="" />
+          <img src="@/assets/common/login-logo.png" alt="">
         </h3>
       </div>
 
@@ -60,11 +60,10 @@
         style="width: 100%; margin-bottom: 30px"
         @click.native.prevent="handleLogin"
       >
-        登录</el-button
-      >
+        登录</el-button>
 
       <div class="tips">
-        <span style="margin-right: 20px">账号: 13800000002</span>
+        <span style="margin-right: 20px">账号: 13800000003</span>
         <span> 密码: 123456</span>
       </div>
     </el-form>
@@ -78,7 +77,7 @@ export default {
   name: 'Login',
   data() {
     // 自定义校验函数
-    const validateMobile = function (rule, value, callback) {
+    const validateMobile = function(rule, value, callback) {
       // 校验value
       // if (validMobile(value)) {
       //   // 如果通过 直接执行callback
@@ -90,7 +89,7 @@ export default {
     }
     return {
       loginForm: {
-        mobile: '13800000002',
+        mobile: '13800000001',
         password: '123456'
       },
       loginRules: {
@@ -120,7 +119,7 @@ export default {
   },
   watch: {
     $route: {
-      handler: function (route) {
+      handler: function(route) {
         this.redirect = route.query && route.query.redirect
       },
       immediate: true
@@ -139,11 +138,11 @@ export default {
     },
     handleLogin() {
       // 为了防止用户直接点击登录 要进行 手动拦截 采用的是表单的 validate 方法
-      this.$refs.loginForm.validate(async (isOk) => {
+      this.$refs.loginForm.validate(async(isOk) => {
         if (isOk) {
           try {
             this.loading = true
-            // 只有校验通过了 我们才去调用action
+            // 只有校验通过了 我们才去调用 action
             await this.$store.dispatch('user/login', this.loginForm)
             // 应该登录成功之后
             // async标记的函数实际上一个promise对象
@@ -151,7 +150,7 @@ export default {
             // this.$router.replace('/dashboard')
             this.$router.push('/')
           } catch (err) {
-            console.log(err)
+            console.log(err, '登录页面')
           } finally {
             //  不论执行try 还是catch  都去关闭转圈
             this.loading = false

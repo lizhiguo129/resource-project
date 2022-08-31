@@ -15,7 +15,7 @@ router.beforeEach(async(to, from, next) => {
       //  表示去的是登录页
       next('/') // 跳到主页
     } else {
-      // // 判断用户有token 的同时   获取用户信息的id
+      // 判断用户有 token 的同时   获取用户信息的id
       if (!store.getters.userId) {
         await store.dispatch('user/getUserInfo')
       }

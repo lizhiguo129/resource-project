@@ -31,6 +31,7 @@ export default {
       'sidebar'
     ]),
     routes() {
+      // 拿到路由信息
       return this.$router.options.routes
     },
     activeMenu() {

@@ -115,3 +115,18 @@ export function param2Obj(url) {
   })
   return obj
 }
+
+// 将列表数据转换为树形结构 => 采用递归 =>自身调用自身 => 条件不能一样 否则会死循环
+export function tranListToTreeData(list, rootvalue) {
+  const arr = []
+  list.forEach(item => {
+    if (item.pid === rootvalue) {
+      arr.push(item)
+      const children = tranListToTreeData(list, item.id)
+      if (children.length) {
+        item.children = children
+      }
+    }
+  })
+  return arr
+}

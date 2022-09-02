@@ -20,3 +20,17 @@ export function addDepartments(data) {
     data
   })
 }
+// 获取单独的部门信息
+export function getDepartDetail(id) {
+  return request({
+    url: `/company/department/${id}`
+  })
+}
+// 编辑部门的接口
+export function updateDepartments(data) {
+  return request({
+    url: `/company/department/${data.id}`,
+    method: 'put',
+    data
+  })
+}

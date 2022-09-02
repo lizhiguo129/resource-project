@@ -1,5 +1,10 @@
 <template>
-  <el-row type="flex" justify="space-between" align="middle" style="height: 40px;width: 100%">
+  <el-row
+    type="flex"
+    justify="space-between"
+    align="middle"
+    style="height: 40px; width: 100%"
+  >
     <el-col>
       <!-- 名称应该变成 对应的节点中的name -->
       <span>{{ treeNode.name }}</span>
@@ -11,14 +16,20 @@
         <el-col>
           <!-- 下拉菜单 element -->
           <el-dropdown @command="operateDepts">
-            <span>
-              操作<i class="el-icon-arrow-down" />
-            </span>
+            <span> 操作<i class="el-icon-arrow-down" /> </span>
             <!-- 下拉菜单 -->
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="add">添加子部门</el-dropdown-item>
-              <el-dropdown-item v-if="isRoot" command="edit">编辑部门</el-dropdown-item>
-              <el-dropdown-item v-if="isRoot" command="del">删除部门</el-dropdown-item>
+              <el-dropdown-item
+                v-if="isRoot"
+                command="edit"
+              >编辑部门
+              </el-dropdown-item>
+              <el-dropdown-item
+                v-if="isRoot"
+                command="del"
+              >删除部门
+              </el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </el-col>
@@ -37,7 +48,7 @@ export default {
     // 定义一个props属性
     treeNode: {
       type: Object, // 对象类型
-      required: true // 要求对方使用您的组件的时候 必须传treeNode属性 如果不传 就会报错
+      required: true // 要求对方使用您的组件的时候 必须传 treeNode 属性 如果不传 就会报错
     },
     isRoot: {
       type: Boolean,
@@ -45,24 +56,28 @@ export default {
     }
   },
   methods: {
+    // 下拉菜单事件
     operateDepts(type) {
       if (type === 'add') {
         // 添加子部门
         this.$emit('addDepts', this.treeNode)
       } else if (type === 'edit') {
-        // 编辑部门
+        // 编辑部门 传递事件给父组件 病携带当前点击的对象过去
+        this.$emit('editDepts', this.treeNode)
       } else {
         // 删除部门
         this.$confirm('你确定删除该部门吗, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
-        }).then(() => {
-          return delDepartments(this.treeNode.id)
-        }).then(() => {
-          this.$emit('delDepts')
-          this.$message.success('删除部门成功')
         })
+          .then(() => {
+            return delDepartments(this.treeNode.id)
+          })
+          .then(() => {
+            this.$emit('delDepts')
+            this.$message.success('删除部门成功')
+          })
       }
     }
   }

@@ -21,12 +21,13 @@
             :tree-node="data"
             @delDepts="getDepartments"
             @addDepts="addDepts"
+            @editDepts="editDepts"
           />
         </el-tree>
       </el-card>
     </div>
     <!-- 新增弹层 由于弹框组件要用到当前的节点对象 这里传给子组件-->
-    <add-dept :show-dialog="showDialog" :currentnode="currentnode" />
+    <add-dept ref="addDept" :show-dialog.sync="showDialog" :currentnode="currentnode" @addDepts="getDepartments" />
   </div>
 </template>
 
@@ -49,7 +50,7 @@ export default {
       defaultProps: {
         label: 'name' // 表示 从这个属性显示内容
       },
-      showDialog: false,
+      showDialog: false, // 弹框的显示
       currentnode: {} // 当前节点对象
     }
   },
@@ -59,14 +60,23 @@ export default {
   methods: {
     async getDepartments() {
       const result = await getDepartments()
+      // 这里的id 是为了判断根节点添加的时候 没有验证，导致重复的一级部门没有被筛选出来 找不到id 这里给空 就可以
       this.company = { name: result.companyName, manager: '负责人', id: '' }
       this.departs = tranListToTreeData(result.depts, '')
     },
     addDepts(node) {
-      // 显示弹出层
+      // 显示弹框
       this.showDialog = true
       // 将点击的当前节点保存起来
       this.currentnode = node
+    },
+    editDepts(node) {
+      // 打开弹框
+      this.showDialog = true
+      // 点击的当前对象给赋值
+      this.currentnode = node
+      // 拿到子组件的实例 触发子组件的方法 将当前点击的部门信息的id 传回去
+      this.$refs.addDept.getDepartDetail(node.id)
     }
   }
 }

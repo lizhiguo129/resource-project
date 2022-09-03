@@ -123,7 +123,7 @@ export default {
           if (this.formData.id) {
             await updateDepartments(this.formData)
           } else {
-            // 添加的部门需要传递的参数为 1）form表单的内容，
+          // 添加的部门需要传递的参数为 1）form表单的内容，
           // pid 是你当前点击部门的id  因为只有这样你才能判断他是点击部门的子级 树状结构就是这样渲染的
             await addDepartments({ ...this.formData, pid: this.currentnode.id })
           }

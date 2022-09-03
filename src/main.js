@@ -16,6 +16,19 @@ import router from './router'
 import '@/icons' // icon
 import '@/permission' // 权限控制 （路由守卫）
 
+import components from './components'// 引入全局组件
+Vue.use(components)// 全局组件
+// 全局的组件注册使用就是相当于
+// Vue.use({
+//   install(Vue) {
+//     Vue.component('PageTools', PageTools)
+//   }
+// })
+
+// 这里注意：基础的全局注册是没有use 直接就是 component
+// import PageTools from './PageTools'
+// Vue.component('PageTools', PageTools)
+
 // 遍历所有的导出的指令对象 完成自定义全局注册
 Object.keys(directives).forEach(item => {
   // 注册自定义指令

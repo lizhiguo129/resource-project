@@ -4,7 +4,7 @@ import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import locale from 'element-ui/lib/locale/lang/en' // lang i18n
+// import locale from 'element-ui/lib/locale/lang/en' // lang i18n
 
 import '@/styles/index.scss' // 全局的样式
 import * as directives from '@/directives'
@@ -15,8 +15,12 @@ import router from './router'
 
 import '@/icons' // icon
 import '@/permission' // 权限控制 （路由守卫）
-
+import * as filters from '@/filters'// 引入全部的过滤器
 import components from './components'// 引入全局组件
+// 遍历对象 拿到所有的过滤器名称 再次遍历 使用过滤器
+Object.keys(filters).forEach(item => {
+  Vue.filter(item, filters[item])
+})
 Vue.use(components)// 全局组件
 // 全局的组件注册使用就是相当于
 // Vue.use({
@@ -44,7 +48,7 @@ Object.keys(directives).forEach(item => {
  */
 
 // set ElementUI lang to EN
-Vue.use(ElementUI, { locale })
+Vue.use(ElementUI)
 // 如果想要中文版 element-ui，按如下方式声明
 // Vue.use(ElementUI)
 

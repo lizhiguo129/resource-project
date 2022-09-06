@@ -40,7 +40,8 @@ module.exports = {
     // 配置反向代理
     proxy: {
       '/api': {
-        target: 'http://ihrm-java.itheima.net/', // 跨域请求的地址
+        target: 'http://ihrm.itheima.net/', // 跨域请求的地址  新的
+        // target: 'http://ihrm-java.itheima.net/', // 跨域请求的地址
         changeOrigin: true // 只有这个值为true的情况下 才表示开启跨域
         // 是不是需要重新更改
       }

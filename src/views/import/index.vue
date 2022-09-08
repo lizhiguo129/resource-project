@@ -31,7 +31,7 @@ export default {
       this.$message.success('导入成功')
       this.$router.back()
     },
-    // 格式事件 的处理
+    // 时间格式化的处理
     formatDate(numb, format) {
       const time = new Date((numb - 1) * 24 * 3600000 + 1)
       time.setYear(time.getFullYear() - 70)

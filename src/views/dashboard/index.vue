@@ -1,12 +1,14 @@
 <template>
   <div class="dashboard-container">
-    <page-tools :show-before="true">
+    <!-- <page-tools :show-before="true">
       <span slot="before">吃完了</span>
       <template v-slot:after>
         <el-button>导入表格</el-button>
       </template>
-    </page-tools>
-  </div>
+    </page-tools> -->
+    首页
+    管理员： {{ name }}
+    <image-upload /></div>
 </template>
 
 <script>

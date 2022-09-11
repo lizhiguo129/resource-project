@@ -8,7 +8,8 @@
     </page-tools> -->
     首页
     管理员： {{ name }}
-    <image-upload /></div>
+    <image-upload />
+  </div>
 </template>
 
 <script>

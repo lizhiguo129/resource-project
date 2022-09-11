@@ -15,7 +15,18 @@
         <el-table border :data="list">
           <!-- sortable="" 这个属性是用来排序的 可以有点击升序降序的按钮 -->
           <el-table-column label="序号" sortable="" type="index" :index="indexMethods" />
-          <el-table-column label="姓名" sortable="" prop="username" />
+          <el-table-column label="姓名" sortable="" prop="username" align="center" />
+          <el-table-column label="头像" align="center">
+            <template slot-scope="{row}">
+              <img
+                v-imagerror="require('@/assets/common/bigUserHeader.png')"
+                :src="row.staffPhoto"
+                style="border-radius: 50%; width: 100px; height: 100px; padding: 10px"
+                alt=""
+                @click="showQrCode(row.staffPhoto)"
+              >
+            </template>
+          </el-table-column>
           <el-table-column label="工号" sortable="" prop="workNumber" />
           <el-table-column label="聘用形式" sortable="" prop="formOfEmployment" :formatter="formatEmployment" />
           <!--  表格的 formatter 属性 的方法  用来格式化内容 -->
@@ -52,6 +63,11 @@
             @current-change="changePage"
           />
         </el-row>
+        <el-dialog title="二维码" :visible.sync="showCodeDialog" @opened="showQrCode" @close="imgUrl=''">
+          <el-row type="flex" justify="center">
+            <canvas ref="myCanvas" />
+          </el-row>
+        </el-dialog>
       </el-card>
     </div>
     <!-- 新建员工弹层组件 -->
@@ -64,6 +80,7 @@ import { getEmployeeList, delEmployee } from '@/api/employees'
 import EmployeeEnum from '@/api/constant/employees'
 import AddDemployee from './components/add-employee.vue'
 import { formatDate } from '@/filters'
+import QrCode from 'qrcode'
 export default {
   name: 'Employees',
   components: {
@@ -78,7 +95,8 @@ export default {
         size: 10, // 一页显示的数据条数
         total: 0 // 总数
 
-      }
+      },
+      showCodeDialog: false// 二维码 弹层
     }
   },
   created() {
@@ -164,6 +182,23 @@ export default {
           return item[headers[key]]
         })
       })
+    },
+    // 点击图片出来二维码事件
+    showQrCode(url) {
+      // url存在的情况下 才弹出层
+      if (url) {
+        console.log(1)
+        this.showCodeDialog = true // 数据更新了 但是我的弹层会立刻出现吗 ？页面的渲染是异步的！！！！
+        // 有一个方法可以在上一次数据更新完毕，页面渲染完毕之后
+        this.$nextTick(() => {
+          // 此时可以确认已经有ref对象了
+          QrCode.toCanvas(this.$refs.myCanvas, url) // 将地址转化成二维码
+          // 如果转化的二维码后面信息 是一个地址的话 就会跳转到该地址 如果不是地址就会显示内容
+        })
+      } else {
+        console.log(2)
+        this.$message.warning('该用户还未上传头像')
+      }
     }
   }
 }

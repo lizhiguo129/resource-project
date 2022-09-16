@@ -1,5 +1,6 @@
 import { getToken, setToken, removeToken, setTimeStamp } from '@/utils/auth'
 import { login, getUserInfo, getUserDetailById } from '@/api/user'
+import { resetRouter } from '@/router'
 // 状态
 const state = {
   token: getToken(), // 设置token初始状态   token持久化 => 放到缓存中
@@ -55,6 +56,8 @@ const actions = {
   logout(context) {
     context.commit('removeToken')// 删除token 同时从缓存当中删除
     context.commit('reomveUserInfo')// 清空用户信息为一个空对象
+    resetRouter()
+    context.commit('permission/setRoutes', [], { root: true })
   }
 }
 export default {

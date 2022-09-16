@@ -14,6 +14,7 @@ import attendancesRouter from './modules/attendances'
 import salarysRouter from './modules/salarys'
 import settingRouter from './modules/setting'
 import socialRouter from './modules/social'
+import user from './modules/user'
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -38,7 +39,7 @@ import socialRouter from './modules/social'
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
-// 静态路由
+// 静态默认路由
 export const constantRoutes = [
   {
     path: '/login',
@@ -58,11 +59,12 @@ export const constantRoutes = [
     redirect: '/dashboard',
     children: [{
       path: 'dashboard',
-      name: 'Dashboard',
+      name: 'dashboard',
       component: () => import('@/views/dashboard/index'),
       meta: { title: '首页', icon: 'dashboard' }
     }]
   },
+
   {
     path: '/import',
     component: Layout,
@@ -71,10 +73,11 @@ export const constantRoutes = [
       path: '',
       component: () => import('@/views/import')
     }]
-  },
 
+  },
+  user
   // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+
 ]
 // 动态路由
 export const asyncRoutes = [
@@ -90,11 +93,11 @@ export const asyncRoutes = [
 const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
-  routes: [...constantRoutes, ...asyncRoutes]
+  routes: [...constantRoutes]
 })
 
-const router = createRouter()
-
+const router = createRouter() // 实例化一个路由
+console.log(router)
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
   const newRouter = createRouter()

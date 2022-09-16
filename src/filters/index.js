@@ -397,3 +397,7 @@ export function getBlob(response) {
 export function imgHandle(obj) {
   return window.URL.createObjectURL(obj)
 }
+export function getDay(value) {
+  const day = value.split('-')[2]
+  return day.startsWith('0') ? day.substr(1) : day
+}

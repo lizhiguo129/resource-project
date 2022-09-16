@@ -7,7 +7,7 @@
         <template slot="after">
           <el-button size="small" type="warning" @click="$router.push('/import')">批量导入</el-button>
           <el-button size="small" type="danger" @click="exportData">批量导出</el-button>
-          <el-button size="small" type="primary" @click="showDialog = true">新增员工</el-button>
+          <el-button v-chackdept="'add-dept'" size="small" type="primary" @click="showDialog = true">新增员工</el-button>
         </template>
       </page-tools>
       <!-- 放置表格和分页 -->
@@ -48,7 +48,7 @@
               <el-button type="text" size="small">转正</el-button>
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
-              <el-button type="text" size="small">角色</el-button>
+              <el-button type="text" size="small" @click="onshowRoleDialog(row.id)">角色</el-button>
               <el-button type="text" size="small" @click="deleteEmployee(row.id)">删除</el-button>
             </template>
           </el-table-column>
@@ -72,19 +72,23 @@
     </div>
     <!-- 新建员工弹层组件 -->
     <add-demployee :show-dialog.sync="showDialog" />
-  </div>
+    <!-- 角色管理组件弹层 -->
+    <assign-role ref="assignRole" :show-role-dialog.sync="showRoleDialog" :user-id="userId" /></div>
 </template>
 
 <script>
 import { getEmployeeList, delEmployee } from '@/api/employees'
 import EmployeeEnum from '@/api/constant/employees'
 import AddDemployee from './components/add-employee.vue'
+import AssignRole from './components/assign-role.vue'
 import { formatDate } from '@/filters'
 import QrCode from 'qrcode'
+
 export default {
   name: 'Employees',
   components: {
-    AddDemployee
+    AddDemployee,
+    AssignRole
   },
   data() {
     return {
@@ -94,9 +98,10 @@ export default {
         page: 1, // 当前页码
         size: 10, // 一页显示的数据条数
         total: 0 // 总数
-
       },
-      showCodeDialog: false// 二维码 弹层
+      userId: null,
+      showCodeDialog: false, // 二维码 弹层
+      showRoleDialog: false // 角色管理弹层
     }
   },
   created() {
@@ -199,6 +204,12 @@ export default {
         console.log(2)
         this.$message.warning('该用户还未上传头像')
       }
+    },
+    // 点击角色的事件
+    async onshowRoleDialog(id) {
+      await this.$refs.assignRole.getUserDetailById(id)
+      this.showRoleDialog = true
+      this.userId = id// 将点击的id 给赋值给data 然后传值到 子组件
     }
   }
 }

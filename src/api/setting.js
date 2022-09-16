@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-// 所有角色列表  是get 请求 用params 传参
+// 所有角色列表  是 get 请求 用 params 传参
 export function getRoleList(params) {
   return request({
     url: '/sys/role',
@@ -43,6 +43,14 @@ export function addRole(data) {
     url: '/sys/role',
     data,
     method: 'post'
+  })
+}
+// 给角色分配权限
+export function assignPerm(data) {
+  return request({
+    url: '/sys/role/assignPrem',
+    method: 'put',
+    data
   })
 }
 

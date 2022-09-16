@@ -1,3 +1,4 @@
+import store from '@/store'
 // 指令的封装对象
 export const imagerror = {
   // 指令对象 会在当前的dom元素插入到节点之后执行
@@ -16,5 +17,19 @@ export const imagerror = {
   },
   componentUpdated(dom, options) {
     dom.src = dom.src || options.value
+  }
+}
+// 按钮的权限控制
+export const chackdept = {
+  inserted(el, options) {
+    const { userInfo } = store.state.user
+    console.log(el, '2222222')
+    if (userInfo.roles.points && userInfo.roles.points.length && userInfo.roles.points.includes(
+      options.value)) {
+      console.log(1)
+    } else {
+      el.style.dispaly = 'none'
+      el.parentNode.removeChild(el)
+    }
   }
 }

@@ -46,6 +46,7 @@ export default {
       return value.getDay() === 6 || value.getDay() === 0
     }
   }
+
 }
 </script>
 

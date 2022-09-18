@@ -6,7 +6,7 @@ import Print from 'vue-print-nb'
 import ScreenFull from './ScreenFull'
 import ThemePicker from './ThemePicker'
 import Lang from './lang'
-
+import TagsView from './TagsView'
 export default {
   install(Vue) {
     Vue.component('PageTools', PageTools)
@@ -15,6 +15,7 @@ export default {
     Vue.component('ScreenFull', ScreenFull)
     Vue.component('ThemePicker', ThemePicker)
     Vue.component('Lang', Lang)
+    Vue.component('TagsView', TagsView)
     Vue.use(Print)
   }
 }

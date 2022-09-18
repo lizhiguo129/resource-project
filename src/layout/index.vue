@@ -7,6 +7,7 @@
       <div :class="{'fixed-header':fixedHeader}">
         <!-- navbar 头部组件 -->
         <navbar />
+        <tags-view />
       </div>
       <!-- app-main 就是页面切换的容器 里面有 二级路由 -->
       <app-main />

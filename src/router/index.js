@@ -91,13 +91,14 @@ export const asyncRoutes = [
   socialRouter
 ]
 const createRouter = () => new Router({
-  // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
-  routes: [...constantRoutes]
+  mode: 'history', // require service support
+  base: '/hr/', // 配置项目的基础地址
+  scrollBehavior: () => ({ y: 0 }), // 管理滚动行为 如果出现滚动 切换就让 让页面回到顶部
+  routes: [...constantRoutes] // 改成只有静态路由
 })
 
 const router = createRouter() // 实例化一个路由
-console.log(router)
+
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
   const newRouter = createRouter()
